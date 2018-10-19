@@ -7,6 +7,7 @@ var Moves_1 = require("./entity/Moves");
 // @ts-ignore
 var port = process.env.PORT || 4011;
 vesper_1.bootstrap({
+    cors: true,
     port: port,
     controllers: [PokemonController_1.PokemonController],
     entities: [Pokemon_1.Pokemon, Moves_1.Moves],

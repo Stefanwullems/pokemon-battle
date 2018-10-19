@@ -2,6 +2,9 @@ type Pokemon {
   id: Int!
   name: String!
   hp: Int!
+  spd: Int!
+  attack: Int!
+  def: Int!
   moves: [Moves]
 }
 

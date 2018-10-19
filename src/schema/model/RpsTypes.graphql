@@ -1,0 +1,5 @@
+type Pokemon {
+  id: Int!
+  primaryType: String!
+  secondaryType: String
+}
