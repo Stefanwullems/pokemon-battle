@@ -9,8 +9,21 @@ export class Pokemon {
   name: string;
 
   @Column()
-  hp: number;
+  moveDmg: number;
+
 
   @Column()
-  moveDmg: number;
+  spd: number;
+
+
+  @Column()
+  attack: number;
+
+
+  @Column()
+  def: number;
+
+  @Column()
+  hp: number;
+
 }

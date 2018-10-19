@@ -6,10 +6,11 @@ var Pokemon_1 = require("./entity/Pokemon");
 // @ts-ignore
 var port = process.env.PORT || 4011;
 vesper_1.bootstrap({
+    cors: true,
     port: port,
     controllers: [PokemonController_1.PokemonController],
     entities: [Pokemon_1.Pokemon],
-    schemas: ["../**/*.graphql"]
+    schemas: ['../**/*.graphql']
 })
     .then(function () {
     console.log("Your app is up and running on http://localhost:" + port + ". \n    You can use playground in development mode on http://localhost:" + port + "/playground");

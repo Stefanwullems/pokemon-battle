@@ -1,6 +1,9 @@
 type Pokemon {
   id: Int!
   name: String!
-  hp: Int!
   moveDmg: Int!
+  hp: Int!
+  spd: Int!
+  attack: Int!
+  def: Int!
 }
