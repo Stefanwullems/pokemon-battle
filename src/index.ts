@@ -1,19 +1,23 @@
 import { bootstrap } from "vesper";
-import { PostController } from "./controller/PostController";
-import { Post } from "./entity/Post";
+import { PokemonController } from "./controller/PokemonController";
+import { Pokemon } from "./entity/Pokemon";
+
+// @ts-ignore
+const port: number = process.env.PORT || 4011;
 
 bootstrap({
-  port: 4000,
-  controllers: [PostController],
-  entities: [Post],
+  port,
+  controllers: [PokemonController],
+  entities: [Pokemon],
   schemas: ["../**/*.graphql"]
 })
-  .then(() => {
-    console.log(
-      "Your app is up and running on http://localhost:4000. " +
-        "You can use playground in development mode on http://localhost:4000/playground"
-    );
-  })
+.then(() => {
+  console.log(
+    `Your app is up and running on http://localhost:${port}. 
+    You can use playground in development mode on http://localhost:${port}/playground`
+  );
+}
+)
   .catch(error => {
     console.error(error.stack ? error.stack : error);
   });

@@ -1,13 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
-export class Post {
+export class Pokemon {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
-  text: string;
+  hp: number;
+
+  @Column()
+  moveDmg: number;
 }
