@@ -1,6 +1,7 @@
 import { bootstrap } from "vesper";
 import { PokemonController } from "./controller/PokemonController";
 import { Pokemon } from "./entity/Pokemon";
+import { Moves } from "./entity/Moves";
 
 // @ts-ignore
 const port: number = process.env.PORT || 4011;
@@ -8,7 +9,7 @@ const port: number = process.env.PORT || 4011;
 bootstrap({
   port,
   controllers: [PokemonController],
-  entities: [Pokemon],
+  entities: [Pokemon, Moves],
   schemas: ["../**/*.graphql"]
 })
 .then(() => {
