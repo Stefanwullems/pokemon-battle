@@ -1,6 +1,6 @@
 type Query {
   allPokemon: [Pokemon]
-  pokomon(id: Int): Pokemon
+  pokemon(id: Int): Pokemon
 }
 
 #type Mutation {

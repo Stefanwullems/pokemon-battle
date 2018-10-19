@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
+import { Moves } from "./Moves";
 
 @Entity()
 export class Pokemon {
@@ -13,4 +14,8 @@ export class Pokemon {
 
   @Column()
   moveDmg: number;
+
+  @ManyToMany(() => Moves, moves => moves.pokemon)
+  @JoinTable()
+  moves: Moves[];
 }
