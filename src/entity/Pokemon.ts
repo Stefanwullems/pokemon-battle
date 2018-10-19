@@ -10,23 +10,16 @@ export class Pokemon {
   name: string;
 
   @Column()
-  moveDmg: number;
-
+  hp: number;
 
   @Column()
-
-  spd: number;
-
+  speed: number;
 
   @Column()
   attack: number;
 
-
   @Column()
-  def: number;
-
-  @Column()
-  hp: number;
+  defense: number;
 
   @ManyToMany(() => Moves, moves => moves.pokemon)
   @JoinTable()

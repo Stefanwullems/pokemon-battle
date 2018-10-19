@@ -1,4 +1,4 @@
-type Pokemon {
+type RpsTypes {
   id: Int!
   primaryType: String!
   secondaryType: String
