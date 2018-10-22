@@ -5,7 +5,9 @@ import {
   Column,
   OneToOne,
   JoinColumn,
-  BaseEntity
+  BaseEntity,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 
 @Entity()
@@ -16,93 +18,77 @@ export class Pokemon extends BaseEntity {
   @Column()
   name: string;
 
-  @JoinColumn()
-  @OneToOne(type => Pokemon_Types)
-  types: Pokemon_Types;
+  @JoinTable()
+  @ManyToMany(type => Type)
+  types: Type[];
 
   @JoinColumn()
   @OneToOne(type => Stats)
   stats: Stats;
 
-  @OneToOne(type => Pokemon_Moves)
-  @JoinColumn()
-  moves: Pokemon_Moves;
-}
-
-@Entity()
-export class Pokemon_Types extends BaseEntity {
-  @OneToOne(type => Pokemon)
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @JoinColumn()
-  @OneToOne(type => Type)
-  primaryType: Type;
-
-  @JoinColumn()
-  @OneToOne(type => Type)
-  secondaryType: Type;
+  @ManyToMany(type => Move)
+  @JoinTable()
+  moves: Move[];
 }
 
 @Entity()
 export class Type extends BaseEntity {
-  @OneToOne(type => Pokemon_Types)
   @PrimaryColumn("text", { nullable: false })
   name: string;
 
-  @Column("integer", { nullable: false })
-  normalMultiplier: string;
+  @Column("float", { nullable: false })
+  normal_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  fireMultiplier: number;
+  @Column("float", { nullable: false })
+  fire_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  waterMultiplier: number;
+  @Column("float", { nullable: false })
+  water_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  electricMultiplier: number;
+  @Column("float", { nullable: false })
+  electric_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  grassMultiplier: number;
+  @Column("float", { nullable: false })
+  grass_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  iceMultiplier: number;
+  @Column("float", { nullable: false })
+  ice_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  fightingMultiplier: number;
+  @Column("float", { nullable: false })
+  fighting_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  poisonMultiplier: number;
+  @Column("float", { nullable: false })
+  poison_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  goundMultiplier: number;
+  @Column("float", { nullable: false })
+  ground_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  flyingMultiplier: number;
+  @Column("float", { nullable: false })
+  flying_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  psychicMultiplier: number;
+  @Column("float", { nullable: false })
+  psychic_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  bugMultiplier: number;
+  @Column("float", { nullable: false })
+  bug_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  rockMultiplier: number;
+  @Column("float", { nullable: false })
+  rock_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  ghostMultiplier: number;
+  @Column("float", { nullable: false })
+  ghost_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  dragonMultiplier: number;
+  @Column("float", { nullable: false })
+  dragon_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  darkMultiplier: number;
+  @Column("float", { nullable: false })
+  dark_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  steelMultiplier: number;
+  @Column("float", { nullable: false })
+  steel_multiplier: number;
 
-  @Column("integer", { nullable: false })
-  fairyMultiplier: number;
+  @Column("float", { nullable: false })
+  fairy_multiplier: number;
 }
 
 @Entity()
@@ -125,37 +111,22 @@ export class Stats extends BaseEntity {
 }
 
 @Entity()
-export class Pokemon_Moves extends BaseEntity {
-  @OneToOne(type => Pokemon)
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @JoinColumn()
-  @OneToOne(type => Move)
-  firstMove: Move;
-
-  @JoinColumn()
-  @OneToOne(type => Move)
-  secondMove: Move;
-
-  @JoinColumn()
-  @OneToOne(type => Move)
-  thirdMove: Move;
-
-  @JoinColumn()
-  @OneToOne(type => Move)
-  fourthMove: Move;
-}
-
-@Entity()
 export class Move extends BaseEntity {
-  @OneToOne(type => Pokemon_Moves)
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
+  @PrimaryColumn({ unique: true })
   name: string;
 
   @Column()
-  dmg: number;
+  damage: number;
+
+  @Column("text", { nullable: false })
+  type: string;
+
+  @Column()
+  accuracy: number;
+
+  @Column("int", { nullable: false })
+  pp: number;
+
+  @Column()
+  priority: boolean;
 }

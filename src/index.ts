@@ -1,13 +1,6 @@
 import { bootstrap } from "vesper";
 import { PokemonController } from "./controller/PokemonController";
-import {
-  Pokemon,
-  Move,
-  Pokemon_Moves,
-  Stats,
-  Pokemon_Types,
-  Type
-} from "./entity/Pokemon";
+import { Pokemon, Move, Stats, Type } from "./entity/Pokemon";
 
 const port: number = Number(process.env.PORT) || 4011;
 
@@ -15,7 +8,7 @@ bootstrap({
   cors: true,
   port,
   controllers: [PokemonController],
-  entities: [Pokemon, Move, Pokemon_Moves, Stats, Pokemon_Types, Type],
+  entities: [Pokemon, Move, Stats, Type],
   schemas: ["../**/*.graphql"]
 })
   .then(() => {
