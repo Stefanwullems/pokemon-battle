@@ -1,4 +1,6 @@
 import { bootstrap } from "vesper";
+import * as IO from 'socket.io'
+
 import { PokemonController } from "./controller/PokemonController";
 import { Pokemon, Move, Stats, Type } from "./entity/Pokemon";
 
@@ -11,7 +13,19 @@ bootstrap({
   entities: [Pokemon, Move, Stats, Type],
   schemas: ["../**/*.graphql"]
 })
-  .then(() => {
+  .then((framework) => {
+
+    const io = IO(framework.server);
+
+    io.on('connect', socket => {
+      const color = socket.request._query.color;
+      console.log(`Trainer ${color} just connected`);
+
+      socket.on('disconnect', () => {
+        console.log(`Trainer ${color} just disconnected`)
+      })
+    });
+
     console.log(
       `Your app is up and running on http://localhost:${port}. 
       You can use playground in development mode on http://localhost:${port}/playground`
