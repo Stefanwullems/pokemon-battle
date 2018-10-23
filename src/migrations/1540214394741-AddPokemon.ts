@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner, getConnection } from "typeorm";
-import { Type, Pokemon, Move, Stats } from "../entity/Pokemon";
+import { Type, Pokemon, Move, Stats, Sprites } from "../entity/Pokemon";
+import { spawn } from "child_process";
 
 export class AddPokemon1540214394741 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -527,6 +528,12 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         defense: 80,
         hp: 60,
         speed: 60
+      },
+      sprites: {
+        front_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/normal/ivysaur.gif",
+        back_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/ivysaur.gif"
       }
     });
 
@@ -540,6 +547,12 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         defense: 62,
         hp: 58,
         speed: 80
+      },
+      sprites: {
+        front_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/normal/charmeleon.gif",
+        back_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmeleon.gif"
       }
     });
 
@@ -553,6 +566,12 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         defense: 80,
         hp: 80,
         speed: 57
+      },
+      sprites: {
+        front_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/normal/wartortle.gif",
+        back_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/wartortle.gif"
       }
     });
 
@@ -566,6 +585,12 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         defense: 55,
         hp: 55,
         speed: 95
+      },
+      sprites: {
+        front_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif",
+        back_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/pikachu.gif"
       }
     });
 
@@ -579,6 +604,12 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         defense: 115,
         hp: 55,
         speed: 35
+      },
+      sprites: {
+        front_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/normal/graveler.gif",
+        back_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/graveler.gif"
       }
     });
 
@@ -592,13 +623,19 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         defense: 40,
         hp: 55,
         speed: 95
+      },
+      sprites: {
+        front_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/normal/scyther.gif",
+        back_sprite_url:
+          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/scyther.gif"
       }
     });
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {}
 
-  async createPokemon({ id, name, types, moves, stats }: IPokemon) {
+  async createPokemon({ id, name, types, moves, stats, sprites }: IPokemon) {
     await getConnection()
       .createQueryBuilder()
       .insert()
@@ -617,46 +654,48 @@ export class AddPokemon1540214394741 implements MigrationInterface {
       id,
       types,
       moves,
-      stats
+      stats,
+      sprites
     });
   }
 
-  async addRelations({ id, types, moves, stats }: IAddRelations) {
+  async addRelations({ id, types, moves, stats, sprites }: IAddRelations) {
     const pokemon = await getConnection()
       .getRepository(Pokemon)
       .findOne(id);
 
     const typesRepo = await getConnection().getRepository(Type);
-    await this.addRelation(pokemon, "types", typesRepo, types);
+    await this.addManyToMany(pokemon, "types", typesRepo, types);
 
     const movesRepo = await getConnection().getRepository(Move);
-    await this.addRelation(pokemon, "moves", movesRepo, moves);
+    await this.addManyToMany(pokemon, "moves", movesRepo, moves);
 
-    await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Stats)
-      .values([
-        {
-          id,
-          hp: stats.hp,
-          attack: stats.attack,
-          defense: stats.defense,
-          speed: stats.speed
-        }
-      ])
-      .execute();
+    await this.addOneToOne(
+      pokemon,
+      Stats,
+      {
+        id: pokemon.id,
+        hp: stats.hp,
+        attack: stats.attack,
+        defense: stats.defense,
+        speed: stats.speed
+      },
+      "stats"
+    );
 
-    const statsRepo = await getConnection().getRepository(Stats);
-
-    await getConnection()
-      .createQueryBuilder()
-      .relation(Pokemon, "stats")
-      .of(pokemon)
-      .set(await statsRepo.findOne(id));
+    await this.addOneToOne(
+      pokemon,
+      Sprites,
+      {
+        id: pokemon.id,
+        front_sprite_url: sprites.front_sprite_url,
+        back_sprite_url: sprites.back_sprite_url
+      },
+      "sprites"
+    );
   }
 
-  async addRelation(pokemon, to, repository, keys) {
+  async addManyToMany(pokemon, to, repository, keys) {
     for (let i = 0; i < keys.length; i++) {
       await getConnection()
         .createQueryBuilder()
@@ -665,6 +704,23 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         .add(await repository.findOne({ where: { name: keys[i] } }));
     }
   }
+
+  async addOneToOne(pokemon, into, values, to) {
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(into)
+      .values([values])
+      .execute();
+
+    const repo = await getConnection().getRepository(into);
+
+    await getConnection()
+      .createQueryBuilder()
+      .relation(Pokemon, to)
+      .of(pokemon)
+      .set(await repo.findOne(pokemon.id));
+  }
 }
 
 interface IAddRelations {
@@ -672,6 +728,12 @@ interface IAddRelations {
   types: string[];
   moves: string[];
   stats: IStats;
+  sprites: ISprites;
+}
+
+interface ISprites {
+  front_sprite_url: string;
+  back_sprite_url: string;
 }
 
 interface IPokemon {
@@ -680,6 +742,7 @@ interface IPokemon {
   types: string[];
   moves: string[];
   stats?: IStats;
+  sprites: ISprites;
 }
 
 interface IStats {

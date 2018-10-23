@@ -25,6 +25,10 @@ export class Pokemon extends BaseEntity {
   @OneToOne(type => Stats)
   stats: Stats;
 
+  @JoinColumn()
+  @OneToOne(type => Sprites)
+  sprites: Sprites;
+
   @ManyToMany(type => Move)
   @JoinTable()
   moves: Move[];
@@ -92,7 +96,7 @@ export class Type extends BaseEntity {
 
 @Entity()
 export class Stats extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryColumn("int", { nullable: false })
   @OneToOne(type => Pokemon)
   id: number;
 
@@ -107,6 +111,19 @@ export class Stats extends BaseEntity {
 
   @Column("int", { nullable: true })
   speed: number;
+}
+
+@Entity()
+export class Sprites extends BaseEntity {
+  @OneToOne(type => Pokemon)
+  @PrimaryColumn("int", { nullable: false })
+  id: number;
+
+  @Column("text", { nullable: true })
+  front_sprite_url: string;
+
+  @Column("text", { nullable: true })
+  back_sprite_url: string;
 }
 
 @Entity()
