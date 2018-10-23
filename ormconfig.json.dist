@@ -1,9 +1,0 @@
-{
-  "type": "postgres",
-  "host":
-  "port":
-  "username":
-  "password":
-  "database": "pokemon",
-  "synchronize":
-}

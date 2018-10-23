@@ -14,7 +14,7 @@ bootstrap({
   .then(() => {
     console.log(
       `Your app is up and running on http://localhost:${port}. 
-    You can use playground in development mode on http://localhost:${port}/playground`
+      You can use playground in development mode on http://localhost:${port}/playground`
     );
   })
   .catch(error => {
