@@ -1,8 +1,31 @@
 type Pokemon {
   id: Int!
   name: String!
+  types: [Type]
   stats: Stats
   moves: [Moves]
+}
+
+type Type {
+  name: String
+  normal_multiplier: Float
+  fire_multiplier: Float
+  water_multiplier: Float
+  electric_multiplier: Float
+  grass_multiplier: Float
+  ice_multiplier: Float
+  fighting_multiplier: Float
+  poison_multiplier: Float
+  ground_multiplier: Float
+  flying_multiplier: Float
+  psychic_multiplier: Float
+  bug_multiplier: Float
+  rock_multiplier: Float
+  ghost_multiplier: Float
+  dragon_multiplier: Float
+  dark_multiplier: Float
+  steel_multiplier: Float
+  fairy_multiplier: Float
 }
 
 type Stats {
@@ -13,7 +36,10 @@ type Stats {
 }
 
 type Moves {
-  id: Int!
-  name: String!
-  dmg: Int!
+  name: String
+  damage: Int
+  accuracy: Int
+  type: String
+  pp: Int
+  priority: Boolean
 }
