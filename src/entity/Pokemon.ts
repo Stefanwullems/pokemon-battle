@@ -93,7 +93,7 @@ export class Type extends BaseEntity {
 
 @Entity()
 export class Stats extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   @OneToOne(type => Pokemon)
   id: number;
 
