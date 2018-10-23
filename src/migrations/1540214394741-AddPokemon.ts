@@ -671,7 +671,7 @@ interface IAddRelations {
   id: number;
   types: string[];
   moves: string[];
-  stats: Stats;
+  stats: IStats;
 }
 
 interface IPokemon {
@@ -679,10 +679,10 @@ interface IPokemon {
   name: string;
   types: string[];
   moves: string[];
-  stats?: Stats;
+  stats?: IStats;
 }
 
-interface Stats {
+interface IStats {
   id?: number;
   attack: number;
   defense: number;
