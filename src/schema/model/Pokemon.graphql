@@ -1,11 +1,15 @@
 type Pokemon {
   id: Int!
   name: String!
-  hp: Int!
-  speed: Int!
-  attack: Int!
-  defense: Int!
+  stats: Stats
   moves: [Moves]
+}
+
+type Stats {
+  hp: Int
+  attack: Int
+  defense: Int
+  speed: Int
 }
 
 type Moves {
