@@ -81,13 +81,14 @@ bootstrap({
     socket.on("attack", (move, fn) => {
       socket.broadcast.emit("action", ({
         type: 'OPPONENT_SELECTED_MOVE',
-        payload: move
+        payload: move.attack
       }))
+      fn(move.attack)
     })
 
     socket.on("disconnect", () => {
 
-      io.emit("action", ({
+      socket.broadcast.emit("action", ({
         type: `${player.toUpperCase()}_LOGOUT`
       }))
 
