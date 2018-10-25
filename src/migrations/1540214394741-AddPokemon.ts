@@ -520,7 +520,7 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
     await this.createPokemon({
       id: 2,
-      name: "ivysaur",
+      name: "stefansaur",
       primaryType: "grass",
       secondaryType: "poison",
       moves: ["tackle", "razor leaf", "sludge", "seed bomb"],
@@ -534,7 +534,7 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
     await this.createPokemon({
       id: 5,
-      name: "charmeleon",
+      name: "claudiozard",
       primaryType: "fire",
       secondaryType: "null",
       moves: ["crunch", "ember", "metal claw", "sucker punch"],
@@ -548,7 +548,7 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
     await this.createPokemon({
       id: 8,
-      name: "wartortle",
+      name: "vincetortle",
       primaryType: "water",
       secondaryType: "null",
       moves: ["peck", "surf", "dragon tail", "ice shard"],
