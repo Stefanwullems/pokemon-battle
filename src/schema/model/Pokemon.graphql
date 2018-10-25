@@ -5,6 +5,7 @@ type Pokemon {
   secondaryType: String
   stats: Stats
   moves: [Moves]
+  sprites: Sprites
 }
 
 type Stats {
@@ -21,4 +22,9 @@ type Moves {
   type: String
   pp: Int
   priority: Boolean
+}
+
+type Sprites {
+  front_sprite_url: String
+  back_sprite_url: String
 }
