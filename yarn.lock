@@ -97,6 +97,13 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/socket.io@^1.4.38":
+  version "1.4.38"
+  resolved "https://registry.yarnpkg.com/@types/socket.io/-/socket.io-1.4.38.tgz#ee1e16d66242a153e1e27aad5a99e0513c39a0ae"
+  integrity sha512-+f49CywK6w2RNDzcug7iUVZoC0262Wr6XrGg0yunW+wFBG8RXC8hiQm94HV1I3H0/8bEodGSjDOxd4i2yhFbwA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/ws@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/ws/-/ws-4.0.2.tgz#b29037627dd7ba31ec49a4f1584840422efb856f"
