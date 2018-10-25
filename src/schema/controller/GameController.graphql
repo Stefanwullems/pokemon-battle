@@ -1,0 +1,11 @@
+type Query {
+  allGames: [Game]
+  game(id: Int): Game
+}
+
+type Mutation{
+  gameSave: Game
+  changeStatus(id: Int!): Game
+  changeStatus2(id: Int!): Game
+}
+

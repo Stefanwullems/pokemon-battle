@@ -1,0 +1,13 @@
+enum Status{
+  
+  Pending
+  Started
+  Finished 
+}
+
+type Game {
+  id: Int
+  status: Status
+  playerone: String
+  playertwo: String
+}

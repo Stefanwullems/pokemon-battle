@@ -3,7 +3,3 @@ type Query {
   pokemon(id: Int): Pokemon
 }
 
-#type Mutation {
-#  attack(id: Int, title: String, text: String): Post
-#  postDelete(id: Int): Boolean
-#}
