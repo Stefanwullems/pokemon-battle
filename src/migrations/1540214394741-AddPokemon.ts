@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, getConnection } from "typeorm";
-import { Type, Pokemon, Move, Stats, Sprites } from "../entity/Pokemon";
-import { spawn } from "child_process";
+import { Pokemon, Move, Stats, Sprites } from "../entity/Pokemon";
+import { Type } from "../entity/Type";
 
 export class AddPokemon1540214394741 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -521,121 +521,98 @@ export class AddPokemon1540214394741 implements MigrationInterface {
     await this.createPokemon({
       id: 2,
       name: "ivysaur",
-      types: ["grass", "poison"],
+      primaryType: "grass",
+      secondaryType: "poison",
       moves: ["tackle", "razor leaf", "sludge", "seed bomb"],
       stats: {
         attack: 80,
         defense: 80,
         hp: 60,
         speed: 60
-      },
-      sprites: {
-        front_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/normal/ivysaur.gif",
-        back_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/ivysaur.gif"
       }
     });
 
     await this.createPokemon({
       id: 5,
       name: "charmeleon",
-      types: ["fire", "null"],
+      primaryType: "fire",
+      secondaryType: "null",
       moves: ["crunch", "ember", "metal claw", "sucker punch"],
       stats: {
         attack: 80,
         defense: 62,
         hp: 58,
         speed: 80
-      },
-      sprites: {
-        front_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/normal/charmeleon.gif",
-        back_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmeleon.gif"
       }
     });
 
     await this.createPokemon({
       id: 8,
       name: "wartortle",
-      types: ["water", "null"],
+      primaryType: "water",
+      secondaryType: "null",
       moves: ["peck", "surf", "dragon tail", "ice shard"],
       stats: {
         attack: 63,
         defense: 80,
         hp: 80,
         speed: 57
-      },
-      sprites: {
-        front_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/normal/wartortle.gif",
-        back_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/wartortle.gif"
       }
     });
 
     await this.createPokemon({
       id: 25,
       name: "pikachu",
-      types: ["electric", "null"],
+      primaryType: "electric",
+      secondaryType: "null",
       moves: ["quick attack", "discharge", "iron head", "play rough"],
       stats: {
         attack: 65,
         defense: 55,
         hp: 55,
         speed: 95
-      },
-      sprites: {
-        front_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif",
-        back_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/pikachu.gif"
       }
     });
 
     await this.createPokemon({
       id: 75,
       name: "graveler",
-      types: ["rock", "ground"],
+      primaryType: "rock",
+      secondaryType: "ground",
       moves: ["stone edge", "earthquake", "tackle", "rock throw"],
       stats: {
         attack: 75,
         defense: 115,
         hp: 55,
         speed: 35
-      },
-      sprites: {
-        front_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/normal/graveler.gif",
-        back_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/graveler.gif"
       }
     });
 
     await this.createPokemon({
       id: 123,
       name: "scyther",
-      types: ["bug", "flying"],
+      primaryType: "bug",
+      secondaryType: "flying",
       moves: ["bug buzz", "wing attack", "sucker punch", "psybeam"],
       stats: {
         attack: 90,
         defense: 40,
         hp: 55,
         speed: 95
-      },
-      sprites: {
-        front_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/normal/scyther.gif",
-        back_sprite_url:
-          "https://img.pokemondb.net/sprites/black-white/anim/back-normal/scyther.gif"
       }
     });
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {}
 
-  async createPokemon({ id, name, types, moves, stats, sprites }: IPokemon) {
+  async createPokemon({
+    id,
+    name,
+    primaryType,
+    secondaryType,
+    moves,
+    stats
+  }: IPokemon) {
     await getConnection()
       .createQueryBuilder()
       .insert()
@@ -644,7 +621,8 @@ export class AddPokemon1540214394741 implements MigrationInterface {
         {
           name,
           id: id,
-          types: [],
+          primaryType,
+          secondaryType,
           moves: []
         }
       ])
@@ -652,20 +630,19 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
     await this.addRelations({
       id,
-      types,
       moves,
       stats,
-      sprites
+      sprites: {
+        front_sprite_url: `https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`,
+        back_sprite_url: `https://img.pokemondb.net/sprites/black-white/anim/back-normal/${name}.gif`
+      }
     });
   }
 
-  async addRelations({ id, types, moves, stats, sprites }: IAddRelations) {
+  async addRelations({ id, moves, stats, sprites }: IAddRelations) {
     const pokemon = await getConnection()
       .getRepository(Pokemon)
       .findOne(id);
-
-    const typesRepo = await getConnection().getRepository(Type);
-    await this.addManyToMany(pokemon, "types", typesRepo, types);
 
     const movesRepo = await getConnection().getRepository(Move);
     await this.addManyToMany(pokemon, "moves", movesRepo, moves);
@@ -725,7 +702,6 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
 interface IAddRelations {
   id: number;
-  types: string[];
   moves: string[];
   stats: IStats;
   sprites: ISprites;
@@ -739,10 +715,10 @@ interface ISprites {
 interface IPokemon {
   id: number;
   name: string;
-  types: string[];
+  primaryType: string;
+  secondaryType: string;
   moves: string[];
   stats?: IStats;
-  sprites: ISprites;
 }
 
 interface IStats {

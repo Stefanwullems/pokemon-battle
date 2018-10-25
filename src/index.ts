@@ -1,10 +1,10 @@
-import { bootstrap } from "vesper"
-import * as IO from "socket.io"
+import { bootstrap } from "vesper";
+import * as IO from "socket.io";
 
-import { PokemonController } from "./controller/PokemonController"
-import { Pokemon, Move, Stats, Type } from "./entity/Pokemon"
-
-// import { Server } from "socket.io"
+import { PokemonController } from "./controller/PokemonController";
+import { TypeController } from "./controller/TypeController";
+import { Pokemon, Move, Stats } from "./entity/Pokemon";
+import { Type } from "./entity/Type";
 
 const port: number = Number(process.env.PORT) || 4011
 
@@ -44,7 +44,7 @@ const port: number = Number(process.env.PORT) || 4011
 bootstrap({
   cors: true,
   port,
-  controllers: [PokemonController],
+  controllers: [PokemonController, TypeController],
   entities: [Pokemon, Move, Stats, Type],
   schemas: ["../**/*.graphql"]
 })
