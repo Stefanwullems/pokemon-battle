@@ -10,7 +10,7 @@ export class PokemonController {
   allPokemon() {
     return this.entityManager.find(Pokemon);
   }
-
+  
   // serves "post(id: Int): Post" requests
   @Query()
   pokemon({ id }) {

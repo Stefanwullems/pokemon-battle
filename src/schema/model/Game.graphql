@@ -1,5 +1,4 @@
 enum Status{
-  
   Pending
   Started
   Finished 
