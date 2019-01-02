@@ -1,6 +1,6 @@
 {
   "type": "postgres",
-  "database": "postgresql-trapezoidal-98803",
+  "database": "postgresql-infinite-10196",
   "synchronize": true,
   "entities": ["target/entity/**/*.js"],
   "migrations": ["target/migrations/*.js"],
