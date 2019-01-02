@@ -262,6 +262,14 @@ export class AddPokemon1540214394741 implements MigrationInterface {
           priority: false
         },
         {
+          name: "shock wave",
+          damage: 60,
+          accuracy: 100,
+          type: "electric",
+          pp: 20,
+          priority: false
+        },
+        {
           name: "discharge",
           damage: 80,
           accuracy: 100,
@@ -520,7 +528,7 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
     await this.createPokemon({
       id: 2,
-      name: "stefansaur",
+      name: "ivysaur",
       primaryType: "grass",
       secondaryType: "poison",
       moves: ["tackle", "razor leaf", "sludge", "seed bomb"],
@@ -534,7 +542,7 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
     await this.createPokemon({
       id: 5,
-      name: "claudiozard",
+      name: "charizard",
       primaryType: "fire",
       secondaryType: "null",
       moves: ["crunch", "ember", "metal claw", "sucker punch"],
@@ -548,7 +556,7 @@ export class AddPokemon1540214394741 implements MigrationInterface {
 
     await this.createPokemon({
       id: 8,
-      name: "vincetortle",
+      name: "wartortle",
       primaryType: "water",
       secondaryType: "null",
       moves: ["peck", "surf", "dragon tail", "ice shard"],
@@ -593,7 +601,21 @@ export class AddPokemon1540214394741 implements MigrationInterface {
       name: "scyther",
       primaryType: "bug",
       secondaryType: "flying",
-      moves: ["bug buzz", "wing attack", "sucker punch", "psybeam"],
+      moves: ["bug buzz", "wing attack", "sucker punch", "quick attack"],
+      stats: {
+        attack: 90,
+        defense: 40,
+        hp: 55,
+        speed: 95
+      }
+    });
+
+    await this.createPokemon({
+      id: 64,
+      name: "kadabra",
+      primaryType: "psychic",
+      secondaryType: "null",
+      moves: ["psybeam", "shadow ball", "shock wave", "confusion"],
       stats: {
         attack: 90,
         defense: 40,

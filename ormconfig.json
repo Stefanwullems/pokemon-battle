@@ -1,0 +1,14 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "password",
+  "database": "pokemon",
+  "synchronize": false,
+  "entities": ["target/entity/**/*.js"],
+  "migrations": ["target/migrations/*.js"],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  }
+}
