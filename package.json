@@ -13,7 +13,8 @@
     "vesper": "^0.1.9"
   },
   "scripts": {
-    "dev": "nodemon .",
+    "start": "node .",
+    "postinstall": "tsc && node . && typeorm migration:run",
     "compile": "tsc -w"
   }
 }
